@@ -1,13 +1,13 @@
-provider "azurerm"{
-    version = "~>2.0"
-    features {}
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=3.0.0"
+    }
+  }
 }
 
-terraform {
-  backend "azurerm" {
-    resource_group_name = "rg-dev07"
-    storage_account_name = "ccpsazuref003"
-    container_name = "ccpterraformstatefile"
-    key            = "ccpsterraform.tfstate"
-  }
+# Configure the Microsoft Azure Provider
+provider "azurerm" {
+  features {}
 }
