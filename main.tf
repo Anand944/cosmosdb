@@ -3,7 +3,7 @@ resource "azurerm_resource_group" "rg" {
   name     = "rg02"
   location = "East Us"
 }
-resource "azurerm_cosmosdb_account" "dbaccout" {
+resource "azurerm_cosmosdb_account" "dbaccount" {
   name                = "siddudbaccount"
   location            = azurerm_resource_group.rg.location
   resource_group_name = azurerm_resource_group.rg.name
@@ -29,15 +29,15 @@ resource "azurerm_cosmosdb_account" "dbaccout" {
 }
 resource "azurerm_cosmosdb_sql_database" "db" {
   name                = "products"
-  resource_group_name = "${azurerm_cosmosdb_account.dbaccount.resource_group_name}"
-  account_name        = "${azurerm_cosmosdb_account.dbaccount.name}"
+  resource_group_name = azurerm_resource_group.rg.name
+  account_name        = azurerm_cosmosdb_account.dbaccount.name
 
 }
 resource "azurerm_cosmosdb_sql_container" "coll" {
   name                  = "Devices"
-  resource_group_name   = "${azurerm_cosmosdb_account.dbaccount.resource_group_name}"
-  account_name          = "${azurerm_cosmosdb_account.dbaccount.name}"
-  database_name         = "${azurerm_cosmosdb_sql_database.db.name}"
+  resource_group_name   = azurerm_resource_group.rg.name
+  account_name          = azurerm_cosmosdb_account.dbaccount.name
+  database_name         = azurerm_cosmosdb_sql_database.db.name
   partition_key_path    = "/Devices"
 
 }
